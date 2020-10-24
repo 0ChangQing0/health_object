@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace: 名称空间，接口的全限定名-->
+<mapper namespace="com.gundam.health.dao.CheckItemDao">
+    <!--查询所有-->
+    <select id="findAll" resultType="CheckItem">
+        SELECT * FROM t_checkitem
+    </select>
+
+    <!--分页条件查询-->
+    <select id="findPage" resultType="CheckItem" parameterType="String">
+        SELECT * FROM t_checkitem
+        <!-- Mybatis 动态参数赋值 DynamicContext
+ <if>标签里的变量，如果参数类型是基本数据类型，
+ 只能用 value 或 _parameter，这个是由它的底层ognl表达式决定的。
+ 如果参数类型是对象类型，则可以填它的属性。另外，使用#的参数可以是形参名也可以是value
+-->
+        <if test="value != null and value.length > 0">
+            WHERE CODE LIKE #{value} or name like #{value}
+        </if>
+    </select>
+</mapper>
